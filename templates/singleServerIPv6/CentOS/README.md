@@ -14,7 +14,7 @@ The following resources will be created by the template:
 
 ## Requirements
 
-* CentOS 7 (Should also work with RHEL, but untested)
+* CentOS 7 (Should also work with RHEL)
 * OpenStack Mitaka or later
 * Update centos_env.yml with the correct values for your OpenStack environment
 
