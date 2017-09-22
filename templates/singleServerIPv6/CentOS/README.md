@@ -5,7 +5,7 @@ The following resources will be created by the template:
 * A new network
 * Two new subnets within the network
   * The first subnet is an IPv4 subnet with a hardcoded cidr: 10.100.0.0/16
-  * The second subnet is an IPv6 subnet, dynamically generated from an existings subnet pool
+  * The second subnet is an IPv6 subnet, dynamically generated from an existing subnet pool
   * The name or ID of the subnet pool can be updated in the centos_env.yml file
 * A router with the new subnets assigned and internet connection
 * A new security group with the following rules:
