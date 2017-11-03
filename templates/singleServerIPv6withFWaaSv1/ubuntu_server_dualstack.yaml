@@ -140,7 +140,7 @@ resources:
     type: OS::Neutron::FirewallRule
     properties:
       name: allow access to ssh
-      description: allow access to ssh from chrigl
+      description: allow access to ssh from home
       action: allow
       destination_port: 22
       enabled: true
@@ -153,7 +153,7 @@ resources:
     type: OS::Neutron::FirewallRule
     properties:
       name: allow access to ssh
-      description: allow access to ssh from chrigl
+      description: allow access to ssh from home
       action: allow
       destination_port: 22
       enabled: true
