@@ -28,6 +28,9 @@ parameters:
   ipv6_lb_pool:
     description: IPv6 LoadBalancerPool
     type: string
+  availability_zone:
+    description: Availability Zone to spawn server in
+    type: string
 
 resources:
 
@@ -35,7 +38,7 @@ resources:
     type: OS::Nova::Server
     properties:
       image: { get_param: server_image }
-      availability_zone: ix1
+      availability_zone: { get_param: availability_zone }
       flavor: m1.micro
       name: { get_param: server_name }
       key_name: { get_param: ssh_key }

@@ -13,6 +13,9 @@ parameters:
   ipv6_subnetpool:
     description: ID or name of the subnet pool where you will get your public IPv6 subnet from
     type: string
+  availability_zone:
+    description: Availability Zone to spawn server in
+    type: string
 
 resources:
   dualstack_net:
@@ -179,6 +182,7 @@ resources:
           ipv6_subnet: { get_resource: ipv6_subnet }
           ipv4_lb_pool: { get_resource: ipv4_lb_pool }
           ipv6_lb_pool: { get_resource: ipv6_lb_pool }
+          availability_zone: { get_param: availability_zone }
 
 outputs:
   ipv4_lb_address:

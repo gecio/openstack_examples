@@ -13,6 +13,9 @@ parameters:
   ipv6_subnetpool:
     description: ID or name of the subnet pool where you will get your public IPv6 subnet from
     type: string
+  availability_zone:
+    description: Availability Zone to spawn server in
+    type: string
 
 resources:
   dualstack_net:
@@ -85,7 +88,7 @@ resources:
       - ipv6_subnet
     properties:
       image: { get_param: server_image }
-      availability_zone: ix1
+      availability_zone: { get_param: availability_zone }
       flavor: m1.micro
       name: heat_dualstack_centos
       key_name: { get_param: ssh_key }
