@@ -93,6 +93,9 @@ resources:
 
   dualstack_fip:
     type: OS::Neutron::FloatingIP
+    depends_on:
+      - dualstack_router
+      - ipv4_router_interface  # Important, since otherwise there is no connection to provider_network yet
     properties:
       floating_network: { get_param: provider_network }
       port_id: { get_resource: dualstack_server_port }
