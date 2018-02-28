@@ -107,9 +107,7 @@ resources:
         properties:
             cloud_config:
                 packages:
-                    - fio
                     - qemu-guest-agent
-                    - tmux
                 package_update: true
                 package_upgrade: true
 outputs:
