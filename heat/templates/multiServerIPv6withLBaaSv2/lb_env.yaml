@@ -1,0 +1,6 @@
+parameters:
+  server_image: "Ubuntu 16.04 Xenial Xerus - Latest"
+  ssh_key: YOUR_SSH_KEY
+  availability_zone: YOUR_AZ
+  provider_network: provider
+  ipv6_subnetpool: customer-ipv6
