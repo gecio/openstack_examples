@@ -1,6 +1,0 @@
-parameters:
-  server_image: "CentOS 7 - Latest"
-  ssh_key: YOUR_SSH_KEYPAIR_NAME
-  availability_zone: YOUR_AZ
-  provider_network: provider
-  ipv6_subnetpool: customer-ipv6
