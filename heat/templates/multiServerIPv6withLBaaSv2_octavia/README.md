@@ -1,4 +1,4 @@
-# Two servers with IPv4 and IPv6 behind a Octavia-LoadBalancer
+# Two servers with IPv4 and IPv6 behind an Octavia LoadBalancer
 
 The following resources will be created by the template:
 
@@ -6,23 +6,24 @@ The following resources will be created by the template:
 * Two subnets within the network
   * The first subnet is an IPv4 subnet with a hardcoded cidr: 10.100.0.0/16
   * The second subnet is an IPv6 subnet, dynamically generated from an existing subnet pool
-  * The name or ID of the subnet pool can be updated in the ubuntu_env.yml file
+  * The name or ID of the subnet pool can be updated in the lb_env.yaml file
 * A router with the new subnets assigned and internet connection
 * A new security group with the following rules:
+  * Ingress TCP/8000 for IPv4 and IPv6 from any destination
   * Ingress ICMP for IPv4 and IPv6 from any destination
   * Ingress SSH for IPv4 and IPv6 from any destination
 * IPv4 LoadBalancer
 * IPv6 LoadBalancer
 * FloatingIP (IPv4) associated to the IPv4 LoadBalancer
 * A ResourceGroup with ...
-  * `count` servers with two interfaces each (1. IPv4, 2. IPv6, to get the ordering for LoadBalancer Members right)
+  * Two servers with two interfaces each (1. IPv4, 2. IPv6, to get the ordering for LoadBalancer Members right)
   * Each server runs [emilevauge/whoamI](https://github.com/emilevauge/whoamI) listening on port `8000`
   * LoadBalancer Member for each server on IPv4 LoadBalancer
   * LoadBalancer Member for each server on IPv6 LoadBalancer
 
 ## Requirements
 
-* Ubuntu 18.04 (it won't work with Ubuntu 12.04 or 14.04)
+* Ubuntu >=18.04
 * OpenStack Queens or later
 * OpenStack Octavia LBaaS v2
 * Update lb_env.yml with the correct values for your OpenStack environment
@@ -34,33 +35,21 @@ The following resources will be created by the template:
 ### Get IP Addresses
 
 ```
-$ openstack stack show ipv6-lbaas-octavia
-+-----------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Field                 | Value                                                                                                                                                              |
-+-----------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| id                    | 9e2e916b-d226-498f-b410-db4b4cae3b7f                                                                                                                               |
-| stack_name            | ipv6-lbaas-octavia                                                                                                                                                 |
-| description           | No description                                                                                                                                                     |
-| creation_time         | 2019-06-26T17:18:17Z                                                                                                                                               |
-| updated_time          | None                                                                                                                                                               |
-| stack_status          | CREATE_COMPLETE                                                                                                                                                    |
-| stack_status_reason   | Stack CREATE completed successfully                                                                                                                                |
-| parameters            | OS::project_id: a896a600eb9942529cf556bbfee849bb                                                                                                                   |
-|                       | OS::stack_id: 9e2e916b-d226-498f-b410-db4b4cae3b7f                                                                                                                 |
-|                       | OS::stack_name: ipv6-lbaas-octavia                                                                                                                                 |
-|                       | availability_zone: es1                                                                                                                                             |
-|                       | ipv6_subnetpool: customer-ipv6                                                                                                                                     |
-|                       | provider_network: provider                                                                                                                                         |
-|                       | server_image: Ubuntu 18.04 Bionic Beaver - Latest                                                                                                                  |
-|                       | ssh_key: ansible_service_key                                                                                                                                       |
-|                       |                                                                                                                                                                    |
-| outputs               | - description: FloatingIP of the IPv4 LoadBalancer                                                                                                                 |
-|                       |   output_key: ipv4_lb_address                                                                                                                                      |
-|                       |   output_value: 185.116.244.133                                                                                                                                    |
-|                       | - description: IPv6 address of the LoadBalancer                                                                                                                    |
-|                       |   output_key: ipv6_lb_address                                                                                                                                      |
-|                       |   output_value: 2a00:c320:1002::1d                                                                                                                                 |
-...
+$ openstack stack output show --all ipv6-lbaas-octavia
++-----------------+--------------------------------------------------------+
+| Field           | Value                                                  |
++-----------------+--------------------------------------------------------+
+| ipv4_lb_address | {                                                      |
+|                 |   "output_value": "185.116.xxx.xxx",                   |
+|                 |   "output_key": "ipv4_lb_address",                     |
+|                 |   "description": "FloatingIP of the IPv4 LoadBalancer" |
+|                 | }                                                      |
+| ipv6_lb_address | {                                                      |
+|                 |   "output_value": "2a00:xxxx:xxxx::XX",                |
+|                 |   "output_key": "ipv6_lb_address",                     |
+|                 |   "description": "IPv6 address of the LoadBalancer"    |
+|                 | }                                                      |
++-----------------+--------------------------------------------------------+
 
 ```
 
